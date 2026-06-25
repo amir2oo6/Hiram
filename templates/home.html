@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه خانگی - موسسه مشاوره</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* ===== هدر ===== */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* لوگو و نام موسسه */
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* بخش راست هدر */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        /* زنگوله */
+        .notification-btn {
+            position: relative;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .notification-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: none;
+        }
+
+        .notification-badge.active {
+            display: flex;
+        }
+
+        /* اسم کاربر */
+        .user-name {
+            color: white;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        /* منو دکمه */
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* درپ‌دون منو */
+        .dropdown-menu {
+            position: absolute;
+            top: 70px;
+            left: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            min-width: 200px;
+            display: none;
+            overflow: hidden;
+            animation: slideDown 0.3s ease;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background: #f5f5f5;
+            color: #667eea;
+            padding-right: 1.8rem;
+        }
+
+        .dropdown-menu a i {
+            font-size: 1.1rem;
+            color: #667eea;
+        }
+
+        /* ===== محتوای اصلی ===== */
+        .main-content {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            min-height: 70vh;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .welcome-section h2 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-section p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* بخش دکمه‌ها */
+        .buttons-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .custom-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .custom-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+        }
+
+        .custom-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* ===== فوتر ===== */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content p {
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.8rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .social-links a:hover {
+            background: #667eea;
+            transform: scale(1.1);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .header-right {
+                gap: 1rem;
+            }
+
+            .logo-text h1 {
+                font-size: 1.2rem;
+            }
+
+            .dropdown-menu {
+                left: auto;
+                right: 2rem;
+            }
+
+            .buttons-section {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-section h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== هدر ===== -->
+    <header>
+        <div class="header-container">
+            <!-- لوگو و نام موسسه -->
+            <div class="logo-section">
+                <div class="logo-icon">
+                    🎓
+                </div>
+                <div class="logo-text">
+                    <h1>موسسه مشاوره</h1>
+                    <p>آینده‌ی درخشان شما</p>
+                </div>
+            </div>
+
+            <!-- بخش راست -->
+            <div class="header-right">
+                <!-- زنگوله -->
+                <button class="notification-btn" id="notificationBtn">
+                    <i class="fas fa-bell"></i>
+                    <div class="notification-badge" id="notificationBadge">1</div>
+                </button>
+
+                <!-- اسم کاربر -->
+                <span class="user-name" id="userName">علی محمدی</span>
+
+                <!-- منو دکمه -->
+                <button class="menu-btn" id="menuBtn">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+
+                <!-- درپ‌دون منو -->
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="#profile">
+                        <i class="fas fa-user"></i>
+                        <span>حساب کاربری</span>
+                    </a>
+                    <a href="#contact">
+                        <i class="fas fa-envelope"></i>
+                        <span>ارتباط با ما</span>
+                    </a>
+                    <a href="#logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>خروج از حساب</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== محتوای اصلی ===== -->
+    <div class="main-content">
+        <div class="welcome-section">
+            <h2>خوش آمدید! 👋</h2>
+            <p>لطفاً یکی از بخش‌های زیر را انتخاب کنید</p>
+        </div>
+
+        <div class="buttons-section">
+            <!-- دکمه 1 -->
+            <button class="custom-btn" onclick="handleButtonClick(1)">
+                <i class="fas fa-book" style="margin-left: 0.5rem;"></i>
+                دکمه اول
+            </button>
+
+            <!-- دکمه 2 -->
+            <button class="custom-btn" onclick="handleButtonClick(2)">
+                <i class="fas fa-graduation-cap" style="margin-left: 0.5rem;"></i>
+                دکمه دوم
+            </button>
+
+            <!-- دکمه 3 -->
+            <button class="custom-btn" onclick="handleButtonClick(3)">
+                <i class="fas fa-chart-bar" style="margin-left: 0.5rem;"></i>
+                دکمه سوم
+            </button>
+
+            <!-- دکمه 4 -->
+            <button class="custom-btn" onclick="handleButtonClick(4)">
+                <i class="fas fa-comments" style="margin-left: 0.5rem;"></i>
+                دکمه چهارم
+            </button>
+
+            <!-- دکمه 5 -->
+            <button class="custom-btn" onclick="handleButtonClick(5)">
+                <i class="fas fa-cog" style="margin-left: 0.5rem;"></i>
+                دکمه پنجم
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== فوتر ===== -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 موسسه مشاوره - تمام حقوق محفوظ است</p>
+            <div class="social-links">
+                <a href="https://instagram.com" target="_blank" title="اینستاگرام">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://t.me/your_channel" target="_blank" title="تلگرام">
+                    <i class="fab fa-telegram"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== تنظیمات درپ‌دون منو =====
+        const menuBtn = document.getElementById('menuBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+
+        menuBtn.addEventListener('click', () => {
+            dropdownMenu.classList.toggle('active');
+        });
+
+        // بستن منو هنگام کلیک خارج آن
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.header-right')) {
+                dropdownMenu.classList.remove('active');
+            }
+        });
+
+        // ===== تنظیمات زنگوله =====
+        const notificationBtn = document.getElementById('notificationBtn');
+        const notificationBadge = document.getElementById('notificationBadge');
+
+        notificationBtn.addEventListener('click', () => {
+            alert('شما 1 اعلان نخوانده دارید!');
+            // می‌توانید اینجا یک صفحه اعلانات نمایش دهید
+        });
+
+        // تابع برای نمایش/پنهان کردن نقطه قرمز
+        function showNotificationBadge(hasNotification) {
+            if (hasNotification) {
+                notificationBadge.classList.add('active');
+            } else {
+                notificationBadge.classList.remove('active');
+            }
+        }
+
+        // ===== تنظیمات دکمه‌های اصلی =====
+        function handleButtonClick(buttonNumber) {
+            alert(`دکمه ${buttonNumber} فشار داده شد!`);
+            // اینجا می‌توانید لاجیک خود را اضافه کنید
+        }
+
+        // ===== تنظیمات درپ‌دون منو =====
+        document.querySelector('a[href="#profile"]').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('صفحه حساب کاربری');
+            // window.location.href = '/profile';
+        });
+
+        document.querySelector('a[href="#contact"]').addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('صفحه ارتباط با ما');
+            // window.location.href = '/contact';
+        });
+
+        document.querySelector('a[href="#logout"]').addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('آیا می‌خواهید از حساب خود خارج شوید؟')) {
+                // window.location.href = '/logout';
+                alert('شما با موفقیت خارج شدید');
+            }
+        });
+
+        // ===== نمایش نقطه قرمز برای تست =====
+        // بدون نظر در زیر را برای نمایش نقطه قرمز حذف کنید
+        // showNotificationBadge(true);
+    </script>
+</body>
+</html>
